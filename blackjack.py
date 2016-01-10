@@ -25,13 +25,19 @@ winning_amount = 0
 burst = False
 
 for x in range(2):
-	if user_cards[x][0] == 'A':soft_hand =True	
+	if user_cards[x][0] == 'A':soft_hand = True	
 	user_count+=user_cards[x][2]
 
-while True:
+blackjack = True if user_count == 21 else  False
+if user_count == 22 :
+	user_count -= 10
+	soft_hand = False
+
+while not blackjack:
 	print 'Enter choice'
 	print '\n1: Hit \n2: Stand \n3: Fold'
-	print '\ndealers cards : %s-%s' % (dealers_cards[0][0],dealers_cards[0][1])
+	print '\ndealers cards :'
+	for x in dealers_cards:print '%s-%s' % (x[0],x[1])	
 	print 'dealers count: ',dealers_cards[0][2]
 	print '\nplayers cards :'
 	for x in user_cards:print '%s-%s' % (x[0],x[1])	
@@ -57,12 +63,6 @@ while True:
 			print 'burst','game over'
 			sys.exit()
 	elif choice == 2:
-		if soft_hand :
-			soft_hand = False	
-			for x in range(2):
-				if user_cards[x][0] == 'A':
-					user_count -= 10
-					break
 		break
 	elif choice == 3:
 		print 'you have chooce to fold'
@@ -77,6 +77,10 @@ if not burst :
 	while dealers_count < 17 :
 		dealers_cards.append(cards.pop())
 		dealers_count += dealers_cards[-1][2]
+	print '\ndealers cards :'
+	for x in dealers_cards:print '%s-%s' % (x[0],x[1])	
+	print '\nplayers cards :'
+	for x in user_cards:print '%s-%s' % (x[0],x[1])	
 	print 'dealers point: %d \nplayers point: %d ' % (dealers_count,user_count)
 	if dealers_count > 21 :
 		print '\n\ndealer burst so player wins'
